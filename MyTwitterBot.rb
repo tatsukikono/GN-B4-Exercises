@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 require './TwitterBot.rb' # TwitterBot.rbの読み込み
-require "stringio"
+require 'yaml'
+
 #---------- MyTwitterBot ----------                                                                         
 class MyTwitterBot < TwitterBot
   # 機能を追加
@@ -21,8 +22,15 @@ tweets = twitter.get_tweet
 
 
 #---誕生日Tweet---
-#File.open("birthday.txt") do |io|
-  
- # p io.read
+  yml_data = YAML.load_file('./birth.yml')
+  t = Time.now
 
-  #end
+#print yml_data,
+#print t.day
+
+ yml_data.each do |prof|
+   if (t.month == (prof["Month"]))  &&  (t.day == (prof["Day"] -1 ))
+     twitter.tweet("明日は #{prof["Name"]} の誕生日です．お祝いしましょう!!")
+     print("ツイートした\n")
+   end
+  end
