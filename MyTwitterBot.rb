@@ -9,7 +9,11 @@ end
 
 twitter = MyTwitterBot.new
 
-# twitter.tweet("message")
+#---任意の文字列をTweet---
+
+#twitter.tweet("message")
+
+#---Tweetを受信---
 
 tweets = twitter.get_tweet
 
@@ -22,15 +26,20 @@ tweets = twitter.get_tweet
 
 
 #---誕生日Tweet---
+  
+filename = 'birth.yml'
+if File.exist?(filename) then
+  puts filename + "が存在します．"
+else
+  puts filename + "が存在しません．"
+  exit()
+end
+
   yml_data = YAML.load_file('./birth.yml')
   t = Time.now
-
-#print yml_data,
-#print t.day
 
  yml_data.each do |prof|
    if (t.month == (prof["Month"]))  &&  (t.day == (prof["Day"] -1 ))
      twitter.tweet("明日は #{prof["Name"]} の誕生日です．お祝いしましょう!!")
-     print("ツイートした\n")
    end
   end
